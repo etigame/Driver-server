@@ -20,11 +20,11 @@ async function getFilesByPath(pathName) {
   }
 }
 
-async function addFile(newFile) {
+async function addFile(newFile, path) {
   const id = _generateId()
   newFile = { ...newFile, id }
   fs.writeFileSync(
-    `root/public/uploads/${newFile.originalname}`,
+    `root/public${path}/${newFile.originalname}`,
     newFile.buffer
   )
   return newFile

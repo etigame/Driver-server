@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     } else {
       filesNames = await fileService.getAllFiles({})
     }
-    
+
     res.send(filesNames)
   } catch (err) {
     res.status(err.code || 400).send(err.message)
@@ -32,7 +32,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', handleFiles.single('myFile'), async (req, res) => {
   try {
-    const newFile = await fileService.addFile(req.file)
+    const {path} = req.query
+    const newFile = await fileService.addFile(req.file, path)
     res.send(newFile)
   } catch (err) {
     res.status(err.code || 400).send(err.message)
