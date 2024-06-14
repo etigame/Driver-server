@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 //     }
 // })
 
-router.post('/', handleFiles.single('myFile'), async (req, res) => {
+router.post('/', handleFiles.single('file'), async (req, res) => {
   try {
     const {path} = req.query
     const newFile = await fileService.addFile(req.file, path)
@@ -38,6 +38,17 @@ router.post('/', handleFiles.single('myFile'), async (req, res) => {
   } catch (err) {
     res.status(err.code || 400).send(err.message)
   }
+})
+
+router.post('/create-folder', async (req, res) => {
+    try {
+        const {path} = req.query
+        const {folderName} = req.body
+        const newFolder = await fileService.addFolder(folderName, path)
+        res.send(newFolder)
+    } catch (err) {
+        res.status(err.code || 400).send(err.message)
+    }
 })
 
 module.exports = router

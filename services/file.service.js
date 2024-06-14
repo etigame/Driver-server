@@ -30,6 +30,11 @@ async function addFile(newFile, path) {
   return newFile
 }
 
+async function addFolder(folderName, path) {
+    if (folderName) fs.mkdirSync(`root/public${path}/${folderName}`)
+    return folderName
+}
+
 function _generateId() {
   return getRandomIntInclusive(1000, 10000)
 }
@@ -40,4 +45,4 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled) // The maximum is inclusive and the minimum is inclusive
 }
 
-module.exports = { getAllFiles, getFilesByPath, addFile }
+module.exports = { getAllFiles, getFilesByPath, addFile, addFolder }
