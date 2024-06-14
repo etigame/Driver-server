@@ -36,7 +36,8 @@ async function addFolder(folderName, path) {
 }
 
 async function removeFile(path) {
-    if (path) fs.unlinkSync(`root/public${path}`)
+    if (path.includes('.')) fs.unlinkSync(`root/public${path}`)
+    else fs.rmSync(`root/public${path}`, {recursive: true})
 }
 
 function _generateId() {
