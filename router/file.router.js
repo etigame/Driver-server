@@ -51,4 +51,14 @@ router.post('/create-folder', async (req, res) => {
     }
 })
 
+router.delete('/', async (req, res) => {
+    try {
+        const {path} = req.query
+        await fileService.removeFile(path)
+        res.send('File removed successfully')
+    } catch (err) {
+        res.status(err.code || 400).send(err.message)
+    }
+})
+
 module.exports = router

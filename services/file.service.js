@@ -35,6 +35,10 @@ async function addFolder(folderName, path) {
     return folderName
 }
 
+async function removeFile(path) {
+    if (path) fs.unlinkSync(`root/public${path}`)
+}
+
 function _generateId() {
   return getRandomIntInclusive(1000, 10000)
 }
@@ -45,4 +49,4 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled) // The maximum is inclusive and the minimum is inclusive
 }
 
-module.exports = { getAllFiles, getFilesByPath, addFile, addFolder }
+module.exports = { getAllFiles, getFilesByPath, addFile, addFolder, removeFile }
