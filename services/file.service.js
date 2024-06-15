@@ -10,7 +10,7 @@ async function getFilesByPath(pathName) {
   const isFileDirectory = fs.statSync(`root/public${pathName}`).isDirectory()
 
   if (isFileDirectory) {
-    const filesNames = fs.readdirSync(`root/public${pathName}`)
+    const filesNames = fs.readdirSync(`root/public${pathName}`) // returns array of files names in the directory
     return filesNames
   } else {
     const fileStats = fs.statSync(`root/public${pathName}`)
@@ -36,8 +36,13 @@ async function addFolder(folderName, path) {
 }
 
 async function removeFile(path) {
-    if (path.includes('.')) fs.unlinkSync(`root/public${path}`)
-    else fs.rmSync(`root/public${path}`, {recursive: true})
+    const isDirectory = fs.statSync(`root/public${path}`).isDirectory()
+    if (isDirectory) fs.rmSync(`root/public${path}`, {recursive: true})
+    else fs.unlinkSync(`root/public${path}`)
+}
+
+async function renameFile(path, newPath) { //also for dir and file
+  fs.renameSync(`root/public${path}`, `root/public${newPath}`)
 }
 
 function _generateId() {
@@ -50,4 +55,4 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled) // The maximum is inclusive and the minimum is inclusive
 }
 
-module.exports = { getAllFiles, getFilesByPath, addFile, addFolder, removeFile }
+module.exports = { getAllFiles, getFilesByPath, addFile, addFolder, removeFile, renameFile }

@@ -51,6 +51,17 @@ router.post('/create-folder', async (req, res) => {
     }
 })
 
+router.put('/', async (req, res) => {
+  try {
+    const {path} = req.query
+    let {newPath} = req.body
+    await fileService.renameFile(path, newPath)
+    res.send(newPath)
+  } catch (err) {
+    res.status(err.code || 400).send(err.message)
+  }
+})
+
 router.delete('/', async (req, res) => {
     try {
         const {path} = req.query
